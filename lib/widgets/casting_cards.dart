@@ -1,7 +1,11 @@
+import 'package:fish_app/models/artwork.dart';
 import 'package:flutter/material.dart';
 
 class CastingCards extends StatelessWidget {
-  const CastingCards({super.key});
+
+  final List<Artwork> artworks;
+  
+  const CastingCards({super.key, required this.artworks});
 
   @override
   Widget build(BuildContext context) {
@@ -10,15 +14,19 @@ class CastingCards extends StatelessWidget {
       width: double.infinity,
       height: 200,
       // color: Colors.red,
-      child: ListView.builder(
-          itemCount: 10,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (BuildContext context, int index) => _CastCard()),
-    );
+        child: ListView.builder(
+            itemCount: 10,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (BuildContext context, int index) => _CastCard(art: artworks[index],)),
+        );
   }
 }
 
 class _CastCard extends StatelessWidget {
+
+  final Artwork art;
+  _CastCard({required this.art});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +39,13 @@ class _CastCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: FadeInImage(
               placeholder: AssetImage('assets/no-image.jpg'),
-              image: NetworkImage('https://placehold.co/150x300/png'),
+              image: NetworkImage(
+                      art.fullImageUrl,
+                      headers: const {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                        'Referer': 'https://www.artic.edu/',
+                      },
+                    ),
               height: 140,
               width: 100,
               fit: BoxFit.cover,
@@ -41,7 +55,7 @@ class _CastCard extends StatelessWidget {
             height: 5,
           ),
           Text(
-            'Nom Actor',
+            art.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,

@@ -1,6 +1,8 @@
 import 'package:fish_app/models/artwork.dart';
+import 'package:fish_app/providers/art_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:fish_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key});
@@ -11,6 +13,9 @@ class DetailsScreen extends StatelessWidget {
     final Artwork artwork =
         ModalRoute.of(context)?.settings.arguments as Artwork;
 
+    final artProvider = Provider.of<ArtProvider>(context);
+    
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -20,7 +25,7 @@ class DetailsScreen extends StatelessWidget {
               [
                 _PosterAndTitile(art: artwork,),
                 _Overview(art: artwork),
-                CastingCards(),
+                CastingCards(artworks: artProvider.onOtherArtwork,),
               ],
             ),
           ),
@@ -52,13 +57,19 @@ class _CustomAppBar extends StatelessWidget {
           color: Colors.black12,
           padding: const EdgeInsets.only(bottom: 10),
           child: Text(
-            'Títol peli',
+            art.title,
             style: TextStyle(fontSize: 16),
           ),
         ),
         background: FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage(art.fullImageUrl),
+          image: NetworkImage(
+                      art.fullImageUrl,
+                      headers: const {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                        'Referer': 'https://www.artic.edu/',
+                      },
+                    ),
           fit: BoxFit.cover,
         ),
       ),
@@ -84,7 +95,13 @@ class _PosterAndTitile extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: FadeInImage(
               placeholder: AssetImage('assets/loading.gif'),
-              image: NetworkImage(art.fullImageUrl),
+              image: NetworkImage(
+                      art.fullImageUrl,
+                      headers: const {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                        'Referer': 'https://www.artic.edu/',
+                      },
+                    ),
               height: 150,
             ),
           ),
@@ -94,20 +111,20 @@ class _PosterAndTitile extends StatelessWidget {
           Column(
             children: [
               Text(
-                'Títol peli',
+                art.title,
                 style: textTheme.headlineSmall,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
               ),
               Text(
-                art.title,
+                art.mediumDisplay,
                 style: textTheme.titleMedium,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
               ),
               Row(
                 children: [
-                  const Icon(Icons.star_outline, size: 15, color: Colors.grey),
+                  const Icon(Icons.date_range, size: 15, color: Colors.grey),
                   const SizedBox(width: 5),
                   Text(art.dateDisplay, style: textTheme.bodySmall),
                 ],
@@ -131,7 +148,7 @@ class _Overview extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Text(
-        art.mediumDisplay,
+        'Other art',
         textAlign: TextAlign.justify,
         style: Theme.of(context).textTheme.titleMedium,
       ),
