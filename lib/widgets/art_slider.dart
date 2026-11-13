@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class MovieSlider extends StatelessWidget {
+  const MovieSlider({super.key});
+
   // const MovieSlider({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 280,
       // color: Colors.red,
@@ -31,7 +33,7 @@ class MovieSlider extends StatelessWidget {
 }
 
 class _MoviePoster extends StatelessWidget {
-  const _MoviePoster({Key? key}) : super(key: key);
+  const _MoviePoster();
 
   @override
   Widget build(BuildContext context) {
