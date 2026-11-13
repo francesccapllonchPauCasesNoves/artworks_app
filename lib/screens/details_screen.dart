@@ -108,28 +108,31 @@ class _PosterAndTitile extends StatelessWidget {
           const SizedBox(
             width: 20,
           ),
-          Column(
-            children: [
-              Text(
-                art.title,
-                style: textTheme.headlineSmall,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-              Text(
-                art.mediumDisplay,
-                style: textTheme.titleMedium,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-              Row(
-                children: [
-                  const Icon(Icons.date_range, size: 15, color: Colors.grey),
-                  const SizedBox(width: 5),
-                  Text(art.dateDisplay, style: textTheme.bodySmall),
-                ],
-              )
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  art.title,
+                  style: textTheme.headlineSmall,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Text(
+                  art.mediumDisplay,
+                  style: textTheme.titleMedium,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Row(
+                  children: [
+                    const Icon(Icons.date_range, size: 15, color: Colors.grey),
+                    const SizedBox(width: 5),
+                    Text(art.dateDisplay, style: textTheme.bodySmall),
+                  ],
+                )
+              ],
+            )
           )
         ],
       ),
