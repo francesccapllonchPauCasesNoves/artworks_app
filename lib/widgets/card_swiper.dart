@@ -1,5 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'pa';
+import 'package:fish_app/models/artwork.dart';
 import 'package:flutter/material.dart';
 
 class CardSwiper extends StatelessWidget {
@@ -12,6 +12,16 @@ class CardSwiper extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
+    if(this.artworks.isEmpty){
+      return SizedBox(
+        width: double.infinity,
+        height: size.height*0.5,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     return SizedBox(
         width: double.infinity,
         // Aquest multiplicador estableix el tant per cent de pantalla ocupada 50%
@@ -23,14 +33,15 @@ class CardSwiper extends StatelessWidget {
           itemWidth: size.width * 0.6,
           itemHeight: size.height * 0.4,
           itemBuilder: (BuildContext context, int index) {
+            final art = artworks[index];
             return GestureDetector(
               onTap: () => Navigator.pushNamed(context, 'details',
-                  arguments: 'detalls peli'),
+                  arguments: art),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: FadeInImage(
                     placeholder: AssetImage('assets/no-image.jpg'),
-                    image: NetworkImage('https://placehold.co/300x400/png'),
+                    image: NetworkImage(art.fullImageUrl),
                     fit: BoxFit.cover),
               ),
             );
