@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
 
     final artProvider = Provider.of<ArtProvider>(context);
     print(artProvider.onDisplayArtwork);
+    print(artProvider.onPopularArtwork);
 
     return Scaffold(
       appBar: AppBar(
@@ -30,7 +31,7 @@ class HomeScreen extends StatelessWidget {
               CardSwiper(artworks: artProvider.onDisplayArtwork),
 
               // Slider de pel·licules
-              MovieSlider(),
+              ArtSlider(artworks: artProvider.onPopularArtwork,),
               // Poodeu fer la prova d'afegir-ne uns quants, veureu com cada llista és independent
               // MovieSlider(),
               // MovieSlider(),
