@@ -9,13 +9,24 @@ class CastingCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    if(artworks.isEmpty){
+      return SizedBox(
+        width: double.infinity,
+        height: 200,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return Container(
       margin: const EdgeInsets.only(bottom: 30),
       width: double.infinity,
       height: 200,
       // color: Colors.red,
         child: ListView.builder(
-            itemCount: 10,
+            itemCount: artworks.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) => _CastCard(art: artworks[index],)),
         );

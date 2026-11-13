@@ -3,8 +3,8 @@ import 'dart:convert';
 class Artwork {
     final int id;
     final String title;
-    final String dateDisplay;
-    final String mediumDisplay;
+    final String? dateDisplay;
+    final String? mediumDisplay;
     final String? artistTitle;
     final String? imageId;
 
@@ -43,7 +43,7 @@ class Artwork {
     if (imageId != null && imageId!.isNotEmpty) {
       return 'https://www.artic.edu/iiif/2/$imageId/full/843,/0/default.jpg';
     }
-    return 'https://via.placeholder.com/300x400.png?text=No+Image+Available';
+    return 'https://placehold.co/300x400/png';
     }
 }
 

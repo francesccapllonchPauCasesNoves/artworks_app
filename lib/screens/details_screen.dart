@@ -59,6 +59,8 @@ class _CustomAppBar extends StatelessWidget {
           child: Text(
             art.title,
             style: TextStyle(fontSize: 16),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         background: FadeInImage(
@@ -119,7 +121,13 @@ class _PosterAndTitile extends StatelessWidget {
                   maxLines: 2,
                 ),
                 Text(
-                  art.mediumDisplay,
+                  art.mediumDisplay ?? 'Medium not known',
+                  style: textTheme.titleMedium,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Text(
+                  art.artistTitle ?? 'Unknown artist',
                   style: textTheme.titleMedium,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -128,7 +136,8 @@ class _PosterAndTitile extends StatelessWidget {
                   children: [
                     const Icon(Icons.date_range, size: 15, color: Colors.grey),
                     const SizedBox(width: 5),
-                    Text(art.dateDisplay, style: textTheme.bodySmall),
+                    Text(art.dateDisplay ?? 'Date display not known',
+                    style: textTheme.bodySmall),
                   ],
                 )
               ],
@@ -143,8 +152,7 @@ class _PosterAndTitile extends StatelessWidget {
 class _Overview extends StatelessWidget {
 
   final Artwork art;
-
-  _Overview({super.key, required this.art});
+  const _Overview({required this.art});
 
   @override
   Widget build(BuildContext context) {

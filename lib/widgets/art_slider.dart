@@ -40,7 +40,7 @@ class ArtSlider extends StatelessWidget {
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 20,
+                itemCount: artworks.length,
                 itemBuilder: (_, int index) => _ArtPoster(art: artworks[index])),
           )
         ],
