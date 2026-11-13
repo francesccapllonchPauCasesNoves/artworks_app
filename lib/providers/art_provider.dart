@@ -11,7 +11,7 @@ class ArtProvider extends ChangeNotifier {
   List<Artwork> onDisplayArtwork = [];
 
   ArtProvider(){
-    print('Fish provider inicialitzat!');
+    print('Art provider inicialitzat!');
 
     getOnDisplayArtworks();
   }
