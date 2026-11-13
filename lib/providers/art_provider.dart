@@ -7,6 +7,7 @@ import 'package:fish_app/models/artwork.dart';
 class ArtProvider extends ChangeNotifier {
   final String _baseUrl = 'api.artic.edu';
   final String _page = '1';
+  final String _page2 = '2';
 
   List<Artwork> onDisplayArtwork = [];
   List<Artwork> onPopularArtwork = [];
@@ -37,7 +38,7 @@ class ArtProvider extends ChangeNotifier {
   Future<void> getOnPopularArtworks()async {
     print('getOnDisplayArtworks');
     var url = Uri.https(_baseUrl, 'api/v1/artworks', {
-      'page': _page,
+      'page': _page2,
       'limit': '20',
       'is_public_domain': 'true',
       'fields': 'id,title,artist_title,date_display,medium_display,image_id',
