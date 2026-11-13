@@ -1,3 +1,4 @@
+import 'package:fish_app/models/artwork.dart';
 import 'package:flutter/material.dart';
 import 'package:fish_app/widgets/widgets.dart';
 
@@ -7,19 +8,18 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: Canviar després per una instància de Peli
-    final String peli =
-        ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-movie';
+    final Artwork artwork =
+        ModalRoute.of(context)?.settings.arguments as Artwork;
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(),
+          _CustomAppBar(art: artwork,),
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                _PosterAndTitile(),
-                _Overview(),
-                _Overview(),
+                _PosterAndTitile(art: artwork,),
+                _Overview(art: artwork),
                 CastingCards(),
               ],
             ),
@@ -31,6 +31,10 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget {
+  final Artwork art;
+
+  _CustomAppBar({super.key, required this.art});
+
   @override
   Widget build(BuildContext context) {
     // Exactament igual que la AppBaer però amb bon comportament davant scroll
@@ -54,7 +58,7 @@ class _CustomAppBar extends StatelessWidget {
         ),
         background: FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage('https://placehold.co/500x300/png'),
+          image: NetworkImage(art.fullImageUrl),
           fit: BoxFit.cover,
         ),
       ),
@@ -63,6 +67,11 @@ class _CustomAppBar extends StatelessWidget {
 }
 
 class _PosterAndTitile extends StatelessWidget {
+
+  final Artwork art;
+
+  _PosterAndTitile({super.key, required this.art});
+
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -75,7 +84,7 @@ class _PosterAndTitile extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: FadeInImage(
               placeholder: AssetImage('assets/loading.gif'),
-              image: NetworkImage('https://placehold.co/200x300/png'),
+              image: NetworkImage(art.fullImageUrl),
               height: 150,
             ),
           ),
@@ -91,7 +100,7 @@ class _PosterAndTitile extends StatelessWidget {
                 maxLines: 2,
               ),
               Text(
-                'Títol original',
+                art.title,
                 style: textTheme.titleMedium,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
@@ -100,7 +109,7 @@ class _PosterAndTitile extends StatelessWidget {
                 children: [
                   const Icon(Icons.star_outline, size: 15, color: Colors.grey),
                   const SizedBox(width: 5),
-                  Text('Nota mitjana', style: textTheme.bodySmall),
+                  Text(art.dateDisplay, style: textTheme.bodySmall),
                 ],
               )
             ],
@@ -112,12 +121,17 @@ class _PosterAndTitile extends StatelessWidget {
 }
 
 class _Overview extends StatelessWidget {
+
+  final Artwork art;
+
+  _Overview({super.key, required this.art});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Text(
-        'Labore eiusmod ad reprehenderit irure eu sunt ex minim. Lorem fugiat Lorem proident duis ea cupidatat. Commodo duis culpa reprehenderit ad elit. Velit duis officia reprehenderit ullamco sint id anim officia est. Enim mollit nisi et exercitation dolore commodo. Cillum mollit laborum non nulla cillum non do reprehenderit Lorem deserunt ex eu sunt do.',
+        art.mediumDisplay,
         textAlign: TextAlign.justify,
         style: Theme.of(context).textTheme.titleMedium,
       ),
